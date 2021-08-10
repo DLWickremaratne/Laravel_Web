@@ -11,6 +11,6 @@ class PostController extends Controller
 
     public function show()
     {
-        return view('blog-post');
+        return view('layouts/blog-post');
     }
 }
