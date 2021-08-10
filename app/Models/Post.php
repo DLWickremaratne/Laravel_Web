@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
+
 {
+
+    protected $guarded = [];
+
     //each post going to have a user
     public function user()
     {
