@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    //each post going to have a user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
