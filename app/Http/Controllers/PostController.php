@@ -13,6 +13,12 @@ class PostController extends Controller
     //
 
 
+    public function index()
+    {
+
+        return view('admin.posts.index');
+    }
+
     public function show(Post $post)
     {
         return view('layouts/blog-post', ['post' => $post]);
