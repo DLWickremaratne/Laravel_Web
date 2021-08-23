@@ -380,7 +380,7 @@
 <script src="{{asset('js/sb-admin-2.js')}}"></script>
 
 
-@yield('scripts')
+@yield('scripts')//open section in somewhere else
 
 </body>
 
