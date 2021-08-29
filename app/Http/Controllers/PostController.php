@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class PostController extends Controller
@@ -59,10 +61,48 @@ class PostController extends Controller
 
 
 
-        // session()->flash('post-created-message', 'Post with title was created '. $inputs['title']);
+        session()->flash('post-created-message', 'Post with title was created ' . $inputs['title']);
 
-        // return redirect()->route('post.index');
+        return redirect()->route('post.index');
+    }
+
+    public function edit(Post $post)
+    {
+
+        return view('admin.posts.edit', ['post' => $post]);
+    }
+
+    public function destroy(Post $post)
+    {
+
+        $post->delete();
+
+        Session::flash('message', 'Post was deleted');
 
         return back();
+    }
+    public function update(Post $post)
+    {
+
+        $inputs = request()->validate([
+            'title' => 'required|min:8|max:255',
+            'post_image' => 'file',
+            'body' => 'required'
+        ]);
+        // $post = new Post();
+        // $post->title = request('title');
+
+        if (request('post_image')) {
+            $inputs['post_image'] = request('post_image')->store('images');
+            $post->post_image = $inputs['post_image'];
+        }
+        $post->title = $inputs['title'];
+        $post->body = $inputs['body'];
+
+        $post->save();
+
+        session()->flash('post-updated-message', 'Post with title was updated ' . $inputs['title']);
+
+        return redirect()->route('post.index');
     }
 }

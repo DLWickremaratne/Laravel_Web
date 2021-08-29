@@ -3,6 +3,16 @@
 
     <h1>All Posts</h1>
 
+    @if(Session::has('message'))
+        <div class="alert alert-danger">{{ Session::get('message')}}</div>
+        @elseif(session('post-created-message'))
+        <div class="alert alert-success">{{ Session::get('post-created-message')}}</div>
+        @elseif(session('post-updated-message'))
+        <div class="alert alert-success">{{ Session::get('post-updated-message')}}</div>
+
+
+    @endif
+
     <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -18,6 +28,7 @@
                   <th>Image</th>
                   <th>Created At</th>
                   <th>Updated At</th>
+                  <th>Delete</th>
 
                 </tr>
               </thead>
@@ -29,6 +40,7 @@
                     <th>Image</th>
                     <th>Created At</th>
                     <th>Updated At</th>
+                    <th>Delete</th>
                 </tr>
               </tfoot>
 
@@ -39,20 +51,16 @@
             <tr>
                 <td>{{$post->id}}</td>
                 <td>{{$post->user->name}}</td>
-                <td>{{ $post->title }}</td>
-                {{--  <td>
-                    <a href="{{route('post.edit', $post->id)}}">{{$post->title}}</a></td>  --}}
-
-
-                <td><img src="{{ $post->post_image }}" alt=""></td>
+                <td><a href="{{route('post.edit', $post->id)}}">{{$post->title}}</a></td>
+                <td><img height="50px" src="{{$post->post_image}}" alt=""></td>
                 <td>{{$post->created_at->diffForHumans()}}</td>
                 <td>{{$post->updated_at->diffForHumans()}}</td>
-                {{--  <td><form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data">
+                 <td><form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                </td>  --}}
+                </td>
             </tr>
                 @endforeach
             </tbody>
